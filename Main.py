@@ -1,6 +1,6 @@
 import random
 class Person:
-    def _init_(self, name, surname, age, balance, id):
+    def __init__(self, name, surname, age, balance, id):
         self.name = name
         self.surname = surname
         self.age = age
@@ -34,6 +34,8 @@ class Person:
                 sum = sum + 250
                 print("К сумме перевода начислены подарочные 250 бонусов")
             print(f"Вы уcпешно перевели сумму в размере: {sum}\nПользователь: {reciever}\nВаш баланс: {self.balance}")
+    def check_id(self):
+        print(f"Ваш id: {self.id}")
 
 
 
@@ -44,3 +46,4 @@ wallet = random.randint(1, 300001)
 id = random.randint(1, 10000)
 a = Person(name, surname, age, wallet, id)
 a.transaction()
+a.check_id()
