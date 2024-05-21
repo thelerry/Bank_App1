@@ -11,7 +11,7 @@ class Person:
             self.balance = self.balance + 2000
             print("К балансу добавлено 2000 доп. бонусов")
     def password_verification(self):
-        password = int(input("Введите парооль для входа: "))
+        password = int(input("Введите пароль для входа: "))
         if password == self.password:
             print("Вы успешно выполнили вход!")
         else:
@@ -23,38 +23,49 @@ class Person:
             print("Вы ввели правильные данные")
         else:
             print("Неправильные данные")
-            return 0
+            exit(1)
     def transaction(self):
+        file = open("transactions.txt","w+")
         print(self.balance)
+        pincode = random.randint(1, 99999)
+        print(f"Ваш пинкод: {pincode}")
         sum = float(input("Введите сумму перевода: "))
         reciever = input("Введите получателя: ")
-        reciever2 = input("Введите пользователя для проверки:")
+        reciever2 = input("Введите получателя для проверки: ")
         if reciever2 == reciever:
             print("Пользователь подтвержден")
-        if sum > self.balance:
-            return 0
-        elif sum > 10000:
-            com = sum / 10
-            print(f"Комиссия составила: {com}")
-            if sum + com > self.balance:
-                return 0
-            self.balance = self.balance - (sum + com)
-            if len(reciever) > 10:
-                sum = sum + 250
-                print("К сумме перевода начислены подарочные 250 бонусов")
-            print(f"Вы уcпешно перевели сумму в размере: {sum + com}\nПользователь: {reciever}\nВаш баланс: {self.balance}")
-        elif sum <= 0:
-            return 0
+            pincode2 = int(input("Введите пинкод: "))
+            if pincode == pincode2:
+                print("Верный пинкод")
+                if sum > self.balance:
+                    return 0
+                elif sum > 10000:
+                    com = sum / 10
+                    print(f"Комиссия составила: {com}")
+                    if sum + com > self.balance:
+                        return 0
+                    self.balance = self.balance - (sum + com)
+                    if len(reciever) > 10:
+                        sum = sum + 250
+                        print("К сумме перевода начислены подарочные 250 бонусов")
+                    print(f"Вы уcпешно перевели сумму в размере: {sum + com}\nПользователь: {reciever}\nВаш баланс: {self.balance}")
+                    file.write(f"Сумма в размере: {sum + com}\nПользователь: {reciever}\nВаш баланс: {self.balance}")
+                elif sum <= 0:
+                    return 0
+                else:
+                    self.balance = self.balance - sum
+                    if len(reciever) > 10:
+                        sum = sum + 250
+                        print("К сумме перевода начислены подарочные 250 бонусов")
+                    print(f"Вы уcпешно перевели сумму в размере: {sum}\nПользователь: {reciever}\nВаш баланс: {self.balance}")
+                    file.write(f"Сумма в размере: {sum}\nПользователь: {reciever}\nВаш баланс: {self.balance}")
+            else:
+                print("Неверный пинкод")
+                exit(1)
         else:
-            self.balance = self.balance - sum
-            if len(reciever) > 10:
-                sum = sum + 250
-                print("К сумме перевода начислены подарочные 250 бонусов")
-            print(f"Вы уcпешно перевели сумму в размере: {sum}\nПользователь: {reciever}\nВаш баланс: {self.balance}")
+            print("Неверный получатель")
     def check_id(self):
         print(f"Ваш id: {self.id}")
-
-
 
 name = input("Введите имя: ")
 surname = input("Введите фамилию: ")
