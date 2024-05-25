@@ -16,6 +16,7 @@ class Person:
             print("Вы успешно выполнили вход!")
         else:
             print("Неверный пароль")
+            exit(1)
     def indification(self):
         name = input("Введите ваше имя для проверки: ")
         surname = input("Введите вашу фамилию для проверки: ")
@@ -31,44 +32,46 @@ class Person:
         print(f"Ваш текущий баланс: {self.balance}")
         pincode = random.randint(1, 99999)
         print(f"Ваш пинкод: {pincode}")
-        sum = float(input("Введите сумму перевода: "))
-        reciever = input("Введите получателя: ")
-        reciever2 = input("Введите получателя для проверки: ")
-        if reciever == Sonsors[i]:
-            self.balance = self.balance + 1000
-            print(f"Ваш новый баланс с учетом бонусов от спонсоров составил: {self.balance}")
+        pincode2 = int(input("Введите пинкод: "))
+        if pincode2 == pincode:
+            print("Верный пинкод")
+            sum = float(input("Введите сумму перевода: "))
+            reciever = input("Введите получателя: ")
+            reciever2 = input("Введите получателя для проверки: ")
             if reciever2 == reciever:
                 print("Получатель подтвержден")
-                pincode2 = int(input("Введите пинкод: "))
-                if pincode == pincode2:
-                    print("Верный пинкод")
-                    if sum > self.balance:
+                if reciever == Sponsors[i]:
+                    self.balance = self.balance + 1000
+                    print(f"Ваш новый баланс с учетом бонусов от спонсоров составил: {self.balance}")
+                if sum > self.balance:
+                    return 0
+                elif sum > 10000:
+                    com = sum / 10
+                    print(f"Комиссия составила: {com}")
+                    if sum + com > self.balance:
                         return 0
-                    elif sum > 10000:
-                        com = sum / 10
-                        print(f"Комиссия составила: {com}")
-                        if sum + com > self.balance:
-                            return 0
-                        self.balance = self.balance - (sum + com)
-                        if len(reciever) > 10:
-                            sum = sum + 250
-                            print("К сумме перевода начислены подарочные 250 бонусов")
-                        print(f"Вы уcпешно перевели сумму в размере: {sum + com}\nПользователь: {reciever}\nВаш баланс: {self.balance}")
-                        file.write(f"Сумма в размере: {sum + com}\nПользователь: {reciever}\nВаш баланс: {self.balance}")
-                    elif sum <= 0:
-                        return 0
-                    else:
-                        self.balance = self.balance - sum
-                        if len(reciever) > 10:
-                            sum = sum + 250
-                            print("К сумме перевода начислены подарочные 250 бонусов")
-                        print(f"Вы уcпешно перевели сумму в размере: {sum}\nПользователь: {reciever}\nВаш баланс: {self.balance}")
-                        file.write(f"Сумма в размере: {sum}\nПользователь: {reciever}\nВаш баланс: {self.balance}")
+                    self.balance = self.balance - (sum + com)
+                    if len(reciever) > 10:
+                        sum = sum + 250
+                        print("К сумме перевода начислены подарочные 250 бонусов")
+                    print(
+                        f"Вы уcпешно перевели сумму в размере: {sum + com}\nПользователь: {reciever}\nВаш баланс: {self.balance}")
+                    file.write(
+                        f"Сумма в размере: {sum + com}\nПользователь: {reciever}\nВаш баланс: {self.balance}")
+                elif sum <= 0:
+                    return 0
                 else:
-                    print("Неверный пинкод")
-                    exit(1)
+                    self.balance = self.balance - sum
+                    if len(reciever) > 10:
+                        sum = sum + 250
+                        print("К сумме перевода начислены подарочные 250 бонусов")
+                    print(
+                        f"Вы уcпешно перевели сумму в размере: {sum}\nПользователь: {reciever}\nВаш баланс: {self.balance}")
+                    file.write(f"Сумма в размере: {sum}\nПользователь: {reciever}\nВаш баланс: {self.balance}")
             else:
                 print("Неверный получатель")
+        else:
+            print("Неверный пинкод")
     def check_id(self):
         print(f"Ваш id: {self.id}")
 
@@ -78,7 +81,7 @@ age = int(input("Введите возраст: "))
 wallet = random.randint(1, 300001)
 id = random.randint(1, 10000)
 password = int(input("Введите пароль: "))
-a = Person(name, surname, age, wallet, id)
+a=Person(name, surname, age, wallet, id)
 a.password_verification()
 a.indification()
 a.transaction()
