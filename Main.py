@@ -6,42 +6,33 @@ class Person:
         self.age = age
         self.balance = balance
         self.id = id
-        if self.age >= 65:
-            self.balance = self.balance + 2000
-            print("К балансу добавлено 2000 доп. пенсионных бонусов")
         self.password = password
+        if self.age >= 65 and self.age <=70:
+            self.balance = self.balance + 2000
+            print("К балансу добавлено 2000 доп.пенсионных бонусов")
+        if self.age > 70:
+            print("Вы не можете быть пользователем нашего банка")
+            exit(1)
+
     def password_verification(self):
-        password = input("Введите пароль для входа: ")
-        f = ""
-        t = False
-        d = ["#", "%", "?", "@", "/"]
+        d = ["$", "*", "№", "#", "%", "?", "\", /"]
         numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-        flag = False
-        y = input("Введите пароль заново: ")
-        while True:
-            if len(y) < 8:
-                print("Слишком короткий пароль")
-                y = input("Введите пароль заново: ")
-            else:
-                for i in d:
-                    if i in y:
-                        t = True
-                        f = str(i)
-                if t == True:
-                    print(f"Найден запрещенный символ - {f}")
-                    y = input("Введите пароль заново: ")
-                    t = False
-                for i in numbers:
-                    if i in y:
-                        flag = True
-                if flag == False:
-                    print("Ненадежный пароль")
-                    y = input("Введите пароль заново: ")
-                    flag = False
-                else:
-                    break
-        if password == y:
-            print("Вы успешно выполнили вход!")
+        password = input("Введите пароль: ")
+        if len(password) < 8:
+            print("Слишком короткий пароль")
+        password = input("Введите пароль заново: ")
+        for i in d:
+            if i in password:
+                print(f"Найден запрещенный символ:{i}\nВы использовали максимальное число попыток\nПопробуйте повторить позже")
+                exit(1)
+        else:
+            print("Надежный пароль")
+
+    def password_checking(self):
+        password_01 = input("Повторно введите ваш пароль: ")
+        password_2 = input("Введите пароль для входа: ")
+        if password_2 == password_01:
+            print("Верный пароль!")
         else:
             print("Неверный пароль")
             exit(1)
@@ -109,9 +100,10 @@ surname = input("Введите фамилию: ")
 age = int(input("Введите возраст: "))
 wallet = random.randint(1, 300001)
 id = random.randint(1, 10000)
-password =()
+password = ()
 a = Person(name, surname, age, wallet, id)
 a.password_verification()
+a.password_checking()
 a.indification()
 a.transaction()
 a.check_id()
