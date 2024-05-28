@@ -15,7 +15,7 @@ class Person:
             exit(1)
 
     def password_verification(self):
-        d = ["$", "*", "№", "#", "%", "?", "\", /"]
+        d = ["$", "*", "№", "#", "%", "?", "/"]
         numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
         password = input("Введите пароль: ")
         if len(password) < 8:
